@@ -7,30 +7,33 @@ class Posts extends React.Component
 		super(props);
 		this.state = {
 			posts: []
-		};
+		};	
 	}
-	componentWillMount()
+
+	showPosts()
 	{
-		fetch('https://jsonplaceholder.typicode.com/posts?_limit=10')
-			.then(res => res.json())
-			.then(data => this.setState({posts: data}));
+		return this.state.posts.map((post) => 
+				<div key={post.id}> 
+					<h3>{post.title}</h3> 
+				</div>
+			
+		);
 	}
+
 	render()
 	{
-		const postItems = this.state.posts.map((post) => (
-			<div key={post.id}>
-				<h3>{post.title}</h3>
-				<p>{post.body}</p>
-			</div>
-		));
-		return(
-			<div>
-				<h2>Posts</h2>
-				{postItems}
-			</div>
+		fetch('https://jsonplaceholder.typicode.com/posts')
+			.then(res => res.json())
+			.then(data => this.setState({posts: data}));
+
+		return (
+		<div>
+			<h2> Posts:</h2>
+			{this.showPosts()}
+			
+		</div>
 		);
 	}
 }
 
 export default Posts;
-
