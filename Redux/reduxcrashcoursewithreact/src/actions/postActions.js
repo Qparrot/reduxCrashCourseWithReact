@@ -13,3 +13,22 @@ export function fetchPosts()
 			}));
 	}
 }
+
+export function createPost(newPost)
+{
+	return function(dispatch)
+	{
+		fetch('https://jsonplaceholder.typicode.com/posts', {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/JSON'
+			},
+			body: JSON.stringify(newPost)
+		})
+			.then(res => res.json())
+			.then( post => dispatch({
+				type: NEW_POST,
+				payload: post}));
+
+	}
+}
